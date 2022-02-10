@@ -9,7 +9,7 @@ Here I set the directory, please change this to the folder in which you store yo
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/Gebruiker/Desktop/demo_BRM1")
+knitr::opts_knit$set(root.dir = setwd("~/Documents/R-studio DRM"))
 "set your working directory here"
 ```
 
