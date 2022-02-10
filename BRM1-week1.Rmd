@@ -1,6 +1,6 @@
 ---
 title: 'BRM1 IBA 2022: Week 1'
-author: "Fill in all student names and team number"
+author: "Bent Eelman, Bram Hanselman, Melissa"
 date: "Last compiled on `r Sys.Date()`"
 output: pdf_document
 ---
