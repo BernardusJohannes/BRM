@@ -1,6 +1,6 @@
 ---
 title: 'BRM1 IBA 2022: Week 1'
-author: "Bent Eelman, Bram Hanselman, Melissa"
+author: "Bent Eelman, Bram Hanselman, Melissa Bakker"
 date: "Last compiled on `r Sys.Date()`"
 output: pdf_document
 ---
@@ -76,13 +76,11 @@ Print the number of complete observations per country on separate lines, on the 
 ```{r}
 question_1 <- function() {
   
-  # write your code here
-  # inspect number of observations in country using table()
-  # inspect complete observations using na.omit() and nrow()
-  # do this last step for each country 
-  
-  # ANSWER: print() number of missing observations in country 1
-  # ANSWER: print() number of missing observations in country 2
+print(table(df$Country))
+
+print(nrow(na.omit(df[df$Country == "DEU",])))
+
+nrow(na.omit(df[df$Country == "GTM",]))
 }
 question_1()
 ```
@@ -106,10 +104,9 @@ It might be that the correlation between the respondent and her/his spouse depen
 
 ```{r}
 question_2_b <- function() {
-  # write your code here
-  # use indexing to calculate the correlation for men or women
-  # use abs to get to the absolute difference
-  # ANSWER: print absolute difference in correlation among men and women
+   print(male <- cor(df$Q276[df$Q260 == "1"], df$Q276R[which(df$Q260 == "1")], use = "complete.obs"))
+  print(female <- cor(df$Q276[df$Q260 == "2"], df$Q276R[df$Q260 == "2"], use = "complete.obs"))
+  abs(male - female)
 }
 question_2_b()
 ```
