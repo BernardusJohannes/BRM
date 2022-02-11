@@ -194,10 +194,11 @@ question_6_b()
 ## 7. Country plots
 How do the countries differ in how satisfied people are with their financial situation given their age measured by `Q262`? Create two plots, one for each country. Put the plots next to one another using `par(mfrow=c(1,2))`. Use `plot` from the base R, and put age on the x-axis. Add the correct labels for the axes, and put the country name in the title.
 ```{r}
-question_7 <- function() 
+par(mfrow=c(1,2))
+question_7 <- function() {
 
   # write your code here
-  par(mfrow=c(1,2))
+
   # save each plot in another r object, named for instance p1 and p2
   # ANSWER1,2: use print() to output every plot you've created
 }
