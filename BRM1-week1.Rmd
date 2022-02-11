@@ -93,12 +93,11 @@ Inspect both the recoded and original education level of the spouse of the respo
 Report the most common *recoded* education level in the data. How is the spouse's education level related to the education level of the respondent? Inspect the correlation among all complete cases. As `na.rm` does not work with `cor`, use `use="complete.obs"`. 
 ```{r}
 question_2_a <- function() {
-  # write your code here
-  # first create a cross tabulation using table
-  # use print() around table to show in output below
-  # then use cor to calculate the correlation between Q276 and Q276R
-  # use complete.obs to exclude missings 
-  # ANSWER: print the correlation 
+ table(df$Q276,df$Q276R)
+  print(table(df$Q276,df$Q276R))
+  cor(df$Q276, df$Q276R, use="complete.obs")
+  print(cor(df$Q276, df$Q276R, use="complete.obs"))
+  
 }
 question_2_a()
 ```
