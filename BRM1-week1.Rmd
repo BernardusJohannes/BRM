@@ -164,6 +164,9 @@ question_4()
 ## 5. Measurement levels
 Both variables under 3) and 4) are represented by numbers. However, numbers can be interpreted at different levels. What is the measurement level of emancipation? What is the measurement level of satisfaction financial situation? Choose among: **Continuous, interval, ordinal or nominal**.
 
+measurement level of emancipation: continuous
+measurement level of satisfaction financial situation: ordinal level
+
 ## 6. Plot
 First plot satisfaction of the financial situation `Q50` using a histogram by the function `hist`. 
 
@@ -198,11 +201,11 @@ par(mfrow=c(1,2))
 question_7 <- function() {
 
   # write your code here
-print(plot(df$Q262[df$Country == "ECU"], ds$Q50[ds$Country == "DEU"], xlab = "respondents' age",
-       ylab = "satisfaction in financial situation", main = "Country: Germany"))
+p1 <- plot(df$Q262[df$Country == "DEU"], df$Q50[df$Country == "DEU"], xlab = "respondents' age",
+       ylab = "satisfaction in financial situation", main = "Country: Germany")
        
- print(plot(df$Q262[df$Country == "HKG"], ds$Q50[ds$Country == "GTM"], xlab = "respondents' age",
-       ylab = "satisfaction in financial situation", main = "Country: Guatemala"))
+ p2 <- plot(df$Q262[df$Country == "GTM"], df$Q50[df$Country == "GTM"], xlab = "respondents' age",
+       ylab = "satisfaction in financial situation", main = "Country: Guatemala")
        
   # save each plot in another r object, named for instance p1 and p2
   
@@ -224,9 +227,9 @@ question_8 <- function() {
   install.packages("ggplot2")
   library("ggplot2") 
   
-  g1 <- ggplot(data = ds, mapping = aes(x = Q262, y = Q50, col = Country)) + geom_point() + geom_smooth(method = "lm") + labs(x = "respondents' age", y = "satisfaction in financial situation")
+  g1 <- ggplot(data = df, mapping = aes(x = Q262, y = Q50, col = Country)) + geom_point() + geom_smooth(method = "lm") + labs(x = "respondents' age", y = "satisfaction in financial situation")
   
-  print(g1(data = ds, mapping = aes(x = Q262, y = Q50, col = Country)) + geom_point() + geom_smooth(method = "lm") + labs(x = "respondents' age", y = "satisfaction in financial situation"))
+  print(g1(data = df, mapping = aes(x = Q262, y = Q50, col = Country)) + geom_point() + geom_smooth(method = "lm") + labs(x = "respondents' age", y = "satisfaction in financial situation"))
    
   # add regression lines using geom_point. 
   # save your ggplot in an r object named g1
