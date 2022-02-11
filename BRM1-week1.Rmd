@@ -120,11 +120,12 @@ Inspect satisfaction with the financial situation of the household measured by `
 Next, inspect the standard deviation across countries using `sd`. What is the standard deviation for country 2? Print this value. Rewatch my video on [indexing](https://www.youtube.com/watch?v=U1gSAE0nzyw).
 ```{r}
 question_3_a <- function() {
-  # write your code here
-  # first inspect Q50 using summary
-  # then inspect the standard deviation per country
-  # mind the missings! here you do need to use na.rm=TRUE
-  # ANSWER: print the standard deviation for country2
+
+ print((summary(df$Q50[df$Country == "DEU"])))
+print((summary(df$Q50[df$Country == "GTM"])))
+
+print(sd(df$Q50[df$Country == "DEU"], na.rm = TRUE))
+print(sd(df$Q50[df$Country == "GTM"], na.rm = TRUE))
 }
 question_3_a()
 
@@ -133,8 +134,14 @@ question_3_a()
 What is the financial satisfaction for each of the spouse *recoded* education level? Use `tapply`. Please see my video on [tapply](https://www.youtube.com/watch?v=XQeag4dki8A).
 ```{r}
 question_3_b <- function() {
-  # write your code here
-  # ANSWER: use tapply to get the mean satisfaction per education level
+  (tapply(df$Q50, df$Q276R, FUN = mean, na.rm = T))
+  print(tapply(df$Q50, df$Q276R, FUN = mean, na.rm = T))
+  
+  ( mean(df$Q50[df$Q276R == "1"], na.rm = TRUE))
+  print(( mean(df$Q50[df$Q276R == "1"], na.rm = TRUE)))
+  
+  mean(df$Q50[df$Q276R == "3"], na.rm = TRUE)
+  
 }
 question_3_b()
 
@@ -147,10 +154,12 @@ Next, inspect whether this country also scores higher on the average *recoded* e
 
 ```{r}
 question_4 <- function() {
-  # write your code here
-  # use tapply to inspect how the countries differ on Q30
-  # ANSWER: use tapply to see how countries differ on recoded education level
-  # can you see a pattern?
+   print(tapply(df$Q30, df$Country, FUN = mean, na.rm = TRUE))
+  print(tapply(df$Q276R, df$Country, FUN = mean, na.rm = TRUE))
+  sd(df$Q30[df$Country == "GTM"], na.rm = TRUE)
+  
+  (mean(df$Q30[df$Country == "DEU"], na.rm = T))
+  mean(df$Q30[df$Country == "GTM"], na.rm = T)
 }
 question_4()
 ```
@@ -165,10 +174,10 @@ Then plot the emancipation variable `Q30` using a barplot. Use `barplot` and `ta
 
 ```{r}
 question_6_a <- function() {
-  # write your code here
-  # ANSWER: print the histogram of Q50
-  # ANSWER: print the barplot of Q30
-  # TIP: use print() around your commands so it is shown in output below
+ 
+print(hist(df$Q50, col = "red", main = "Countries: Germany & Guatamala", xlab = "financial situation"))
+  
+barplot(table(df$Q30), col = "red", main = "Emancipation Germany and Guatamala")
 }
 question_6_a()
 
@@ -178,8 +187,8 @@ Now plot the satisfaction financial situation per emancipation level in one plot
 *Note*. Depending on the measurement level selected under 5) only a few plots are appropriate!
 ```{r}
 question_6_b <- function() {
-  # write your code here
-  # ANSWER: perform either barplot or histogram depending on your answer under 5.
+
+boxplot(df$Q50 ~ factor(df$Q30), xlab = "Emancipation", ylab = "Financial situation", col = "Red")
 }
 question_6_b()
 
