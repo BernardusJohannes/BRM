@@ -198,8 +198,14 @@ par(mfrow=c(1,2))
 question_7 <- function() {
 
   # write your code here
-
+print(plot(df$Q262[df$Country == "ECU"], ds$Q50[ds$Country == "DEU"], xlab = "respondents' age",
+       ylab = "satisfaction in financial situation", main = "Country: Germany"))
+       
+ print(plot(df$Q262[df$Country == "HKG"], ds$Q50[ds$Country == "GTM"], xlab = "respondents' age",
+       ylab = "satisfaction in financial situation", main = "Country: Guatemala"))
+       
   # save each plot in another r object, named for instance p1 and p2
+  
   # ANSWER1,2: use print() to output every plot you've created
 }
 question_7()
@@ -215,8 +221,17 @@ question_8 <- function() {
   
   # write your code here
   # create a ggplot that is a scatterplot (just dots)
+  install.packages("ggplot2")
+  library("ggplot2") 
+  
+  g1 <- ggplot(data = ds, mapping = aes(x = Q262, y = Q50, col = Country)) + geom_point() + geom_smooth(method = "lm") + labs(x = "respondents' age", y = "satisfaction in financial situation")
+  
+  print(g1(data = ds, mapping = aes(x = Q262, y = Q50, col = Country)) + geom_point() + geom_smooth(method = "lm") + labs(x = "respondents' age", y = "satisfaction in financial situation"))
+   
   # add regression lines using geom_point. 
   # save your ggplot in an r object named g1
+  ggsave("g1.pdf")
+
   # make sure the dots and lines are colored by country
   # ANSWER; use print() to show this plot in output below
 }
