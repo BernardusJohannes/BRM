@@ -260,10 +260,27 @@ question6a <- function() {
   # ANSWER: print plot for country 1
 }
 question6a()
+  attach(df)
+  
+   emancipation_1 <- apply(df[df$Country==country1, c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")], 1, mean, na.rm =TRUE)
+
+print(plot(Q262[Country==country1], emancipation_1, main = "Relationship of age and emancipation Germany", xlab = "Age Germany", ylab="Emancipation Germany"))
+
+
+  
+  
+}
+question6a()
 
 question6b <- function() {
   
   # ANSWER: print plot for country 2
+  
+  emancipation_2 <- apply(df[df$Country==country2, c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")], 1, mean, na.rm =TRUE)
+
+print(plot(Q262[Country==country2], emancipation_2, main = "Relationship of age and emancipation Guatamala", xlab = "Age Guatamala", ylab="Emancipation Guatamala"))
+
+
 }
 question6b()
 
