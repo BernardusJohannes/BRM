@@ -1,6 +1,6 @@
 ---
 title: "BRM1 IBA 2022: Week 2"
-author: "Bent Eelman, Bram ....., Melissa ..... "
+author: "Bent Eelman, Bram Hanselman, Melissa Bakker "
 date: "Last compiled on `r Sys.Date()`"
 output: pdf_document
 ---
@@ -228,13 +228,24 @@ question5 <- function() {
   # across the seven recoded emancipation items
   # save this as a new variable in your dataset
   
+emanci_DEU <- apply(df[df$Country== country1, c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
+
+emanci_GTM <- apply(df[df$Country== country2, c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
+
+ 
   # after the emancipation variable is created:
     # to save this variable in your environment 
     # you have to run the following line (remove the hashtag!):
     # dataframe$emanci <<- dataframe$emanci 
   
   # ANSWER: print mean new variable for country 1
+    
+  print(mean(abs(emanci_DEU)))
   # ANSWER: print mean new variable for country 2
+   
+  mean(abs(emanci_GTM))
+  
+  mean(emanci_DEU-emanci_GTM)
 }
 question5()
 
