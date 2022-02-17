@@ -189,15 +189,14 @@ k <- 7
     # use diag() to get to the variances
     # sum the variances using sum()
   # ANSWER: Print the variance-covariance matrix country 1
-  
-  m_country1 <- var(df[df$Country=="CHN", itemsR], use = "pairwise.complete.obs") 
+  m_country1 <- var(df[df$Country== country1, itemsR], use = "pairwise.complete.obs") 
   
   sum(diag(m_country1))
   
 
   # ANSWER: Print the variance-covariance matrix country 2
   
-  m_country2 <- var(df[df$Country== "TUN", itemsR], use = "pairwise.complete.obs") 
+  m_country2 <- var(df[df$Country== country2, itemsR], use = "pairwise.complete.obs") 
   
  sum(diag(m_country2))
   
