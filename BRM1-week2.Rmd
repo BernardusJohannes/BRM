@@ -1,0 +1,314 @@
+---
+title: "BRM1 IBA 2022: Week 2"
+author: "Fill in all student names and team number"
+date: "Last compiled on `r Sys.Date()`"
+output: pdf_document
+---
+
+Here I set the directory, please change this to the folder in which you store your files and R project! Do NOT use `setwd` but only the `knitr::opts_knit$set(root.dir = "")`. If you don't know your working directory, run `getwd` in your console.
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/bramh/OneDrive/Documents/Business Statistics/BRM")
+```
+
+- start with an empty environment to prevent mistakes: 
+  + remove all objects from the environment
+  + read in the raw data file 
+
+```{r}
+getwd()
+rm(list=ls()) # remove all objects
+
+```
+
+
+# Assignment week 2 
+
+Continue with the data file of week 1, and assign it to an R object named df. Please save the name of country 1 (the one that comes alphabetically first) in an R object named country1 and the other country name in country2. This ensures that the output is exactly the same as in CodeGrade!
+
+When I noted ANSWER in the Rchunks below, this means you need to provide code that outputs a value which will be checked in CodeGrade!
+```{r}
+# read in data file
+# df <- # place here your read.csv command
+
+df <- read_csv("GTM_DEU.csv")
+country1 <- "DEU"
+country2 <- "GTM"
+
+
+
+## 1. $t$-test
+Inspect the country means on overall satisfaction `Q49` using `tapply`. Please see my video on [tapply](https://www.youtube.com/watch?v=XQeag4dki8A).
+
+Test whether overall satisfaction `Q49` is equal or more than 7 using `t.test`. This is the null hypothesis. See the help function to understand how to use this function for a one-sided t-test. 
+
+Print the $t$-value and $p$-value for country 1, and on a consecutive line for country 2. Please see my video on [one-sample t-test](https://youtu.be/EztiOglzs4s). Do this for each country separately using indexing.
+
+In the excel sheet report the $t$-value and $p$-value for country 2, and determine whether this is significant or not.
+
+```{r}
+question1 <- function() {
+  
+  # inspect the country means on Q49 using tapply()
+  
+  tapply(df$Q49, df$Country, mean, na.rm="TRUE")
+  
+  # ANSWER: print() t-test output in country 1
+  # ANSWER: print() t-test output in country 2
+  
+  t.test(df$Q49[df$Country== country1], mu=7, alternative="less")
+  t.test(df$Q49[df$Country== country2], mu=7, alternative="less")
+  
+}
+question1()
+```
+
+How would you label this variable measuring satisfaction? **Likert, semantic difference scale, paired comparison, rank order, continuous rating scale, or Stapel.** Please select the correct answer in the excel sheet.
+
+## 2. Chisquare $X^2$ test
+Analyze dependency between emancipation `Q30` and the respondent's *recoded* education level `Q275R`. Print the output of the `chisq.test`.When may chi-squared approximation be incorrect?
+
+In the excel file, report the $X^2$-value, the p-value, when a chi-square value is incorrect, and interpret whether they are dependent or not. Please see my video on [chi-square test](https://youtu.be/L3JsW4vz1P4).
+
+```{r}
+question2 <- function() {
+  
+  # ANSWER: perform the chisquare test for emancipation and 
+  # the respondent's recoded education level
+  
+  chisq.test(df$Q30, df$Q275R, simulate.p.value = TRUE)
+  
+}
+question2()
+```
+How would you label this variable measuring emancipation? **Likert, semantic difference scale, paired comparison, rank order, continuous rating scale, or Stapel.** Please select the correct answer in the excel sheet.
+
+## 3. Validity
+Explore all seven items that measure female emancipation (`Q28`,`Q29`,`Q30`,`Q31`, `Q32`, `Q33`, and `Q35`) per country. Use **pairwise deletion**. *Note*: Country 1 is the country that comes first alphabetically. In the output you should see two correlation matrices.
+
+Inspect the correlation matrix, and answer the question in the excel on whether or not there is a high convergent validity of `Q28` for each country. Answer the question on pairwise deletion. Please see my video on [inspecting convergent and discriminant validity](https://youtu.be/yXmEmOCsfek).
+
+```{r}
+question3 <- function() {
+
+  # inspect correlation matrix using cor()
+  # inspect pairwise deletion using use="pairwise.complete.obs"
+  # do this for each country 
+  
+emancipation_items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
+emancipation_items <- emancipation_items
+
+
+cor(df[df$Country == country1,emancipation_items], use = "pairwise.complete.obs")
+
+cor(df[df$Country == country2,emancipation_items], use = "pairwise.complete.obs")
+  
+  # ANSWER: print() correlation matrix in country 1
+  # ANSWER: print() correlation matrix in country 2
+}
+question3()
+```
+
+Inspect which variable relates the weakest to the others. Report whether `Q28` relates weaker to the other items in country 1 or country 2. Can you think of an explanation? It measures *Pre-school child suffers with working mother* where 1 means strongly agree. Given that you've used pairwise deletion, does each correlation depend on the same observations?
+
+
+## 4. Reliability
+
+### Recoding
+Inspect the distribution of the categories among the seven emancipation items using `table`. Use the codebook provided on canvas to understand the meaning of the answer categories. 
+
+Recode items so that a high number reflects a **negative attitude** towards female emancipation. This means you need to change category 1 to category 4, category 2 to category 3, etc. This comes down to subtracting the answer from 5 for each variable. Not all of the emancipation variables have the same answer categories! See codebook.
+
+Attach the recoded variables to your data with the addition `R` to their original variable names. So `Q28` becomes `Q28R` when recoded. Save the names of the recoded variables in an object called itemsR and save this to the environment. 
+
+Attach the variables to the dataframe and save this also in the environment. Check your results by printing the cross tabulation for variable `Q28` and `Q28R`. This output will be graded by CodeGrade.
+
+```{r}
+question4a <- function() {
+  # recode the variables by subtracting 5 from each variable
+    # save in the dataframe as a new variable 
+    # use <<- to make sure you can use these variables in other R chunks.
+    # df[itemsR] <<- df[itemsR]
+    # itemsR <<- itemsR
+  
+    # with the name of the old variable + R
+  # ANSWER: print the crosstabulation of Q28 and Q28R
+}
+question4a()
+```
+
+### Cronbach's Alpha
+There are multiple formulas to calculate the Cronbach's alpha. One is defined as follows:
+$$ alpha = \frac{k}{k-1} \left(1-\frac{\sum_{i}^k\sigma^2_{y_{i}}}{\sigma^2_{x}}\right)$$
+
+where $k$ is the number of items, $\sigma^2_{y_{i}}$ is the variance of the $i$th item, and $\sum_{i}^k\sigma^2_{y_{i}}$ is the sum of variance of all items. $\sigma^2_{x}$ is the variance of the observed **total** test scores. 
+Implement this formula below. Do this separately for each country on the recoded items you've created above. Please see my video on [cronbach's alpha](https://www.youtube.com/watch?v=iCzv-eJoPBc). Follow my instructions below carefully.
+
+Fill out the code you used for calculating the variance-covariance matrix. Make sure you use only one line of code! Print the variance-covariance matrix and the Cronbach's alpha for each country separately.
+
+```{r}
+question4b <- function() {
+  # first calculate number of items
+  # and save this in an object.
+  
+  # then calculate the variance for all items per item using var()
+    # use the recoded items!!
+    # to make it easier, we use listwise deletion (use="complete.obs")
+    # use diag() to get to the variances
+    # sum the variances using sum()
+  # ANSWER: Print the variance-covariance matrix country 1
+  # ANSWER: Print the variance-covariance matrix country 2
+  
+  # lastly, calculate the variance of total test score
+  # which is the sum of all covariances and variances
+  # fill in these numbers in the formula that is written above 
+  # hover your mouse to see the nice representation
+  # ANSWER: Print the cronbach's alpha for country 1
+  # ANSWER: Print the cronbach's alpha for country 2
+}
+question4b()
+```
+
+The Spearman-Brown Prophecy Formula is easier to calculate, and referred to as the standardized Cronbach's alpha. The standardized Cronbach's alpha is defined as follows:
+
+$$alpha_{st} = \frac{k * \overline{r}}{1+(k-1) * \overline{r}}$$
+
+Calculate the standardized Cronbach's alpha in the same way as is done with the Cronbach's alpha above but now use the correlation matrix (see point 3) instead of the variance-covariance matrix. It helps if you save the correlation matrix in an R object, and then retrieve the correlations with `lower.tri` using indexing. Do this separately per country, and use pairwise deletion. Again use the recoded items!
+
+```{r}
+question4c <- function() {
+  # get the correlationmatrix for each country across the seven recoded items
+    # use pairwise deletion
+    # save as an R object
+  # calculate the average correlation using the correlation matrix
+    # find the lower triangle of the matrix by lower.tri using indexing
+    # Do not include the diagonal! diag=FALSE
+    # then calculate the mean across these numbers
+  # use the average correlation to fill out the formula above
+  # ANSWER: print cronbach alpha for country 1
+  # ANSWER: print cronbach alpha for country 2
+}
+question4c()
+
+```
+
+You can check whether you did it correctly, using the `psych` package. Install the package first by `install.packages("psych")` (comment or delete this line before knitting). I also had to download [Rtools](https://cran.rstudio.com/bin/windows/Rtools/). Select the .exe file suitable for your operating system. Make sure you do this separately for each country!
+
+In the excel file, fill in the standardized cronbach's alpha values for both countries and answer the question whether you need to recode all variables before calculating the cronbach's alpha of this multi-item scale. Again use the recoded items!
+
+```{r}
+# install.packages("psych")
+library(psych) # only works if you installed the package!
+question4d <- function() {
+  
+  # calculate the cronbach's alpha on pairwise correlation matrix
+  # use the recoded answers, use itemR to call these columns
+  # ANSWER: run alpha first for country 1
+  # ANSWER: run alpha again for country 2
+}
+question4d()
+```
+
+## 5. Calculate mean scores
+Calculate for each person a mean score across the seven **recoded** items mentioned above. Use `apply` function, on the rows (second argument is 1), and the function mean (mind the missings). Alternatively, you could manually add the columns together using `+` between the variables. Please watch my video on [calculating means](https://www.youtube.com/watch?v=_pbbh2HAfdo). Do not use `rowMeans` here, I want you to use either `apply` or use the manual approach as explained above and in the video. 
+
+When you have calculated the mean across the variables for each row in your data, you end up with a numeric vector. The first value means the mean score of person 1 in your data across the emancipation variables. 
+
+Attach this vector as a new variable labeled `emanci` to your data file. Calculate the country mean in this new variable by using `mean`. Do you understand why you cannot use `mean` in the creating the variable, but you do need to use it to calculate country means? 
+
+Print the absolute mean differences between these countries in `emanci` using `abs`. Report in the excel file the means you find and the country difference in means. 
+
+```{r}
+question5 <- function() {
+  
+  # calculate the mean scores for each person in your data
+  # across the seven recoded emancipation items
+  # save this as a new variable in your dataset
+  
+  # after the emancipation variable is created:
+    # to save this variable in your environment 
+    # you have to run the following line (remove the hashtag!):
+    # dataframe$emanci <<- dataframe$emanci 
+  
+  # ANSWER: print mean new variable for country 1
+  # ANSWER: print mean new variable for country 2
+}
+question5()
+
+```
+
+## 6. Scatter plot
+Plot the relationship of age `Q262` (x-axis) and the emancipation variable that you just created `emanci` (y-axis). Make sure you use the mean scores calculated under 5). Create the plot separately for each country and report the code for country 1 in the excel file. Make sure this is on one line!
+
+```{r}
+question6a <- function() {
+  
+  # ANSWER: print plot for country 1
+}
+question6a()
+
+question6b <- function() {
+  
+  # ANSWER: print plot for country 2
+}
+question6b()
+
+```
+
+## 7. Emancipation levels among Millennials
+Create a dummy variable equal to 1 if millennial (age 15 – 34) and 0 otherwise. To clarify: people aged 34 are labeled 1, and people aged 35 are labeled 0. Use the age variable `Q262`. Make sure missing cases in the original variable are also missing in the dummy variable. Use the `ifelse` statement. Please watch my video on [creating dummy variables](https://www.youtube.com/watch?v=J2eAJG5i84Y).
+
+Calculate the percentage of the population is millennial in country 1. Print this number and report it in the excel file.
+
+Inspect the average value and standard deviation of emancipation item `emanci` for millennials and others (use the dummy you've created above). Use `tapply`. Report in the excel file whether Millennials or others are more emancipated. Use the codebook provided on canvas to understand the meaning of the answer categories.
+
+Is the mean difference significantly different from zero (using a 95% confidence interval)? Use `t.test` on the whole dataset including both countries. Watch my video on [two-sample t-tests](https://www.youtube.com/watch?v=Kr-v3Pw3Py8).
+
+Report the $t$-value and $p$-value in the excel file, and determine whether the Millennials significantly differ from the others in responding to `emanci`. Interpret the differences. 
+
+```{r}
+question7 <- function() {
+  
+  # create a dummy variable for millennials:
+    # use the ifelse statement
+    # make sure that missings in the age variable 
+    # are also missing in your dummy variable!
+    # millennials <- # name this variable millennials!
+  # inspect number of millennials using table
+  # inspect mean's of emanci for millennials and others 
+  # inspect sd's of emanci for millennials and others 
+  
+  # ANSWER: print proportions millennials in country 1
+  # ANSWER: print t-test to test the means of emanci for millennials
+
+}
+question7()
+
+```
+
+
+**************************************************************************************
+
+## KNIT RMARKDOWN TO PDF FILE TO UPLOAD TO CANVAS
+When you're ready, and you know for sure there are no mistakes in your code, you can try to knit the document. Knitting means that you run all the code chunks consecutively, so what is created in one code chunk might be used in the following chunk. 
+
+If you run into problems, please check the following:
+* Do not use the function install.packages() inside your code (only once to install the package). If you include install.packages, R will try to find a connection and install the package while knitting.
+* If you use functions from packages, you need to install this package before knitting, and use the function library() to be able to use them while knitting
+* Make sure the data and variables names you use, are consistent throughout
+* Check your output after you knitted!
+Please see my instruction video about [knitting](https://www.youtube.com/watch?v=uM-lA3K7wmo).
+
+**************************************************************************************
+
+## CREATE .R FILE TO UPLOAD TO CANVAS
+When you're done with the assignment, please run the following code in the console (the window in which commands and output are printed) to obtain the R document:
+
+knitr::purl("./BRM1-week2.Rmd")
+
+Note that the . represents your current working directory, so make sure the .Rmd file is located in this directory. The R file will be located in the same folder as your R project.
+
+**************************************************************************************
