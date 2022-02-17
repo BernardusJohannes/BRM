@@ -155,14 +155,11 @@ question4a <- function() {
   Q35R <- abs((df$Q35)-6) 
   df$Q35R <- Q35R
   
-items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
-itemsR <- c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")
+emancipation_items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
+emancipation_items_R <- c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")
   
     # with the name of the old variable + R
   # ANSWER: print the crosstabulation of Q28 and Q28R
-  
-  print(table(df$Q28R, df$Q28))
-  
 }
 question4a()
 ```
@@ -180,9 +177,7 @@ Fill out the code you used for calculating the variance-covariance matrix. Make 
 question4b <- function() {
   # first calculate number of items
   # and save this in an object.
-  
-k <- 7
-
+  k <- 7
   # then calculate the variance for all items per item using var()
     # use the recoded items!!
     # to make it easier, we use listwise deletion (use="complete.obs")
@@ -193,9 +188,7 @@ k <- 7
   
   sum(diag(m_country1))
   
-
   # ANSWER: Print the variance-covariance matrix country 2
-  
   m_country2 <- var(df[df$Country== country2, itemsR], use = "pairwise.complete.obs") 
   
  sum(diag(m_country2))
@@ -205,14 +198,11 @@ k <- 7
   # fill in these numbers in the formula that is written above 
   # hover your mouse to see the nice representation
   # ANSWER: Print the cronbach's alpha for country 1
-  
   print(((k/(k-1))*(1-sum(diag(m_country1))/sum(m_country1))))
-  
-  
-  
+
   # ANSWER: Print the cronbach's alpha for country 2
-  
-    print(((k/(k-1))*(1-sum(diag(m_country2))/sum(m_country2))))
+  print(((k/(k-1))*(1-sum(diag(m_country2))/sum(m_country2))))
+
 }
 question4b()
 ```
@@ -228,11 +218,8 @@ question4c <- function() {
   # get the correlationmatrix for each country across the seven recoded items
     # use pairwise deletion
     # save as an R object
-  
-corC<<-cor(df[df$Country == country1, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
+  corC<<-cor(df[df$Country == country1, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
 corP<<- cor(df[df$Country == country2, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
-
-
   # calculate the average correlation using the correlation matrix
     # find the lower triangle of the matrix by lower.tri using indexing
     # Do not include the diagonal! diag=FALSE
@@ -247,7 +234,6 @@ print((7*meancorP) / (1+(7-1) * meancorP))
   # use the average correlation to fill out the formula above
   # ANSWER: print cronbach alpha for country 1
   # ANSWER: print cronbach alpha for country 2
-
 }
 question4c()
 
