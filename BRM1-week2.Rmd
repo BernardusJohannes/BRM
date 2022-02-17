@@ -230,8 +230,8 @@ question4c <- function() {
     # use pairwise deletion
     # save as an R object
   
-corC<<-cor(df[df$Country == "CHN", c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
-corP<<- cor(df[df$Country == "TUN", c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
+corC<<-cor(df[df$Country == country1, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
+corP<<- cor(df[df$Country == country2, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
 
 
   # calculate the average correlation using the correlation matrix
