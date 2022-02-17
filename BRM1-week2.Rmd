@@ -369,8 +369,19 @@ question7 <- function() {
   # inspect mean's of emanci for millennials and others 
   # inspect sd's of emanci for millennials and others 
   
+    ages <- df$Q262
+  "0" <- ages[which(df$Q262 >=35)] 
+  "1" <- ages[which(df$Q262 >=15) & (df$Q262 <= 34)]
+  
+  
   # ANSWER: print proportions millennials in country 1
+  
+  print(table(ages, df$Country == country1))
+  
+  print(t.test(df$Q262, conf.level=0.95))
+  
   # ANSWER: print t-test to test the means of emanci for millennials
+  
 
 }
 question7()
