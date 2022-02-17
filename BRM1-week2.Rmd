@@ -34,7 +34,7 @@ When I noted ANSWER in the Rchunks below, this means you need to provide code th
 # read in data file
 # df <- # place here your read.csv command
 
-df <- read_csv("GTM_DEU.csv")
+df <- read.csv("GTM_DEU.csv")
 country1 <- "DEU"
 country2 <- "GTM"
 
