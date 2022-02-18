@@ -115,38 +115,28 @@ Attach the variables to the dataframe and save this also in the environment. Che
 
 ```{r}
 question4a <- function() {
-  # recode the variables by subtracting 5 from each variable
-    # save in the dataframe as a new variable 
-    # use <<- to make sure you can use these variables in other R chunks.
-    # df[itemsR] <<- df[itemsR]
-    # itemsR <<- itemsR
-  
-  Q28R <- abs((df$Q28)-5) 
-  df$Q28R <- Q28R
-  Q29R <- abs((df$Q29)-5) 
-  df$Q29R <- Q29R
-  
-  Q30R <- abs((df$Q30)-5) 
-  df$Q30R <- Q30R
-  
-  Q31R <- abs((df$Q31)-5) 
-  df$Q31R <- Q31R
-  
-  Q32R <- abs((df$Q32)-5) 
-  df$Q32R <- Q32R
-  
-  Q33R <- abs((df$Q33)-6) 
-  df$Q33R <- Q33R
-  
-  Q35R <- abs((df$Q35)-6) 
-  df$Q35R <- Q35R
-  
-items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
-itemsR <- c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")
-  
-    # with the name of the old variable + R
-  # ANSWER: print the crosstabulation of Q28 and Q28R
-print(table(df$Q28R, df$Q28))
+
+# recode the variables by subtracting 5 from each variable
+ # save in the dataframe as a new variable 
+ # use <<- to make sure you can use these variables in other R chunks.
+ # with the name of the old variable + R
+
+df$Q29R <<- 5 - df$Q29 
+df$Q28R <<- 5 - df$Q28 
+
+df$Q30R <<- 5 - df$Q30 
+df$Q31R <<- 5 - df$Q31
+
+df$Q32R <<- 5 - df$Q32
+df$Q33R <<- 6 - df$Q33
+df$Q35R <<- 6 - df$Q35
+
+itemsR <<- c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")
+
+# ANSWER: print the crosstabulation of Q28 and Q28R
+
+print(table(df$Q28, df$Q28R))
+
 }
 question4a()
 ```
