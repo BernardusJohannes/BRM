@@ -46,14 +46,14 @@ question1 <- function() {
   
   # inspect the country means on Q49 using tapply()
   
-  tapply(df$Q49, df$Country, mean, na.rm="TRUE")
+  print(tapply(df$Q49, df$Country, mean, na.rm=TRUE))
   
   # ANSWER: print() t-test output in country 1
+    print(t.test(df$Q49[df$Country== country1], mu=7, alternative="less"))
+
   # ANSWER: print() t-test output in country 2
-  
-  t.test(df$Q49[df$Country== country1], mu=7, alternative="less")
-  t.test(df$Q49[df$Country== country2], mu=7, alternative="less")
-  
+    print(t.test(df$Q49[df$Country== country2], mu=7, alternative="less"))
+
 }
 question1()
 ```
