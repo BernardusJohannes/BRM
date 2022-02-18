@@ -224,20 +224,44 @@ Calculate the standardized Cronbach's alpha in the same way as is done with the 
 question4c <- function() {
   # get the correlationmatrix for each country across the seven recoded items
     # use pairwise deletion
-    # save as an R object
-  corC<<-cor(df[df$Country == country1, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
-corP<<- cor(df[df$Country == country2, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q33R","Q35R")], use = "pairwise.complete.obs")
+    # save as an R object 
   # calculate the average correlation using the correlation matrix
     # find the lower triangle of the matrix by lower.tri using indexing
     # Do not include the diagonal! diag=FALSE
-meancorC <<- mean(corC[lower.tri(corP,diag = F)])
-print((7*meancorC) / (1+(7-1) * meancorC))
-meancorP<<- mean(corP[lower.tri(corC,diag = F)])
-print((7*meancorP) / (1+(7-1) * meancorP))
+    
+    corDEU <- cor(df[df$Country == country1, itemsR], use = "pairwise.complete.obs")
+
+corDEU
+
+corGTM<- cor(df[df$Country == country2, itemsR], use = "pairwise.complete.obs")
+
+corGTM
+
+
+corDEU [ lower.tri ( corDEU , diag = FALSE) ]
+
+meanDEU <- mean(corDEU [ lower.tri ( corDEU , diag = FALSE) ] )
+
+corGTM [ lower.tri ( corGTM , diag = FALSE) ]
+
+meanGTM <- mean( corGTM [ lower.tri ( corGTM , diag = FALSE) ])     
+    
+    
+
     # then calculate the mean across these numbers
   # use the average correlation to fill out the formula above
   # ANSWER: print cronbach alpha for country 1
   # ANSWER: print cronbach alpha for country 2
+  
+alphast_DEU <- (k * meanDEU) / (1 + ( k - 1 ) * meanDEU) 
+
+alphast_DEU
+
+alphast_GTM <- (k * meanGTM ) / (1 + ( k - 1 ) * meanGTM) 
+
+alphast_GTM
+  
+  
 }
 question4c()
 ```
