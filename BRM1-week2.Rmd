@@ -278,7 +278,10 @@ question4d <- function() {
   # calculate the cronbach's alpha on pairwise correlation matrix
   # use the recoded answers, use itemR to call these columns
   # ANSWER: run alpha first for country 1
+ alpha(corDEU)
   # ANSWER: run alpha again for country 2
+  alpha(corGTM)
+
 }
 question4d()
 ```
