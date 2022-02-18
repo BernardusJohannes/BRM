@@ -89,10 +89,21 @@ question3 <- function() {
   # inspect pairwise deletion using use="pairwise.complete.obs"
   # do this for each country 
   
-items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
-items <- items
-cor(df[df$Country == country1,items], use = "pairwise.complete.obs")
-cor(df[df$Country == country2,items], use = "pairwise.complete.obs")
+colnames(df)
+
+items <<- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
+
+g  <- cor(df[,items], use = "pairwise.complete.obs")
+g1 <- cor(df[df$Country==country1,items], use = "pairwise.complete.obs")
+g2 <- cor(df[df$Country==country2,items], use = "pairwise.complete.obs")
+
+  
+g
+g1
+g2
+
+print(g1)
+print(g2)
   
   # ANSWER: print() correlation matrix in country 1
   # ANSWER: print() correlation matrix in country 2
