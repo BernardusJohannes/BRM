@@ -303,21 +303,28 @@ question5 <- function() {
   # across the seven recoded emancipation items
   # save this as a new variable in your dataset
   
-emanci <<- apply(df[, items_R], 1, mean, na.rm =TRUE)
+emanci <<- apply( df[, itemsR], 1, mean, na.rm = T )
+
+emanci
+
  
   # after the emancipation variable is created:
     # to save this variable in your environment 
     # you have to run the following line (remove the hashtag!):
-    # dataframe$emanci <<- dataframe$emanci 
+
+print ( mean ( df$Country == country1 [ emanci ] , na.rm = T ) )
+
+print ( mean ( df$Country == country2 [ emanci ] , na.rm = T ) )
+
+print ( meanEMANCIDEU <- mean ( df$Country == country1 [ emanci ] , na.rm = T ) )
+
+print ( meanEMANCIGTM <- mean ( df$Country == country2 [ emanci ] , na.rm = T ) )
+
+print ( abs ( meanEMANCIDEU - meanEMANCIGTM ) ) 
   
   # ANSWER: print mean new variable for country 1
-    
-  print(mean(abs(emanci_DEU)))
   # ANSWER: print mean new variable for country 2
-   
-  mean(abs(emanci_GTM))
-  
-  mean(emanci_DEU-emanci_GTM)
+
 }
 question5()
 ```
