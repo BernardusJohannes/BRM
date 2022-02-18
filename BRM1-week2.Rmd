@@ -67,12 +67,12 @@ In the excel file, report the $X^2$-value, the p-value, when a chi-square value 
 
 ```{r}
 question2 <- function() {
+
+  print(table(df$Q30, df$Q275R))
+  print(chisq.test(df$Q30, df$Q275R))
   
   # ANSWER: perform the chisquare test for emancipation and 
   # the respondent's recoded education level
-  
-  chisq.test(df$Q30, df$Q275R, simulate.p.value = TRUE)
-  
 }
 question2()
 ```
