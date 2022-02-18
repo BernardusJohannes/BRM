@@ -1,17 +1,17 @@
 ---
 title: "BRM1 IBA 2022: Week 2"
-author: "Bent Eelman, Bram Hanselman, Melissa Bakker "
+author: "Bent Eelman, Bram Hanselman, Melissa Bakker"
 date: "Last compiled on `r Sys.Date()`"
 output: pdf_document
 ---
 
 Here I set the directory, please change this to the folder in which you store your files and R project! Do NOT use `setwd` but only the `knitr::opts_knit$set(root.dir = "")`. If you don't know your working directory, run `getwd` in your console.
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/bramh/OneDrive/Documents/Business Statistics/BRM")
+knitr::opts_knit$set(root.dir =  setwd("~/Business Statistics/BRM"))
+setwd("~/Business Statistics/BRM")
+
 ```
 
 - start with an empty environment to prevent mistakes: 
@@ -21,7 +21,6 @@ knitr::opts_knit$set(root.dir = "C:/Users/bramh/OneDrive/Documents/Business Stat
 ```{r}
 getwd()
 rm(list=ls()) # remove all objects
-
 ```
 
 
@@ -37,18 +36,11 @@ When I noted ANSWER in the Rchunks below, this means you need to provide code th
 df <- read.csv("GTM_DEU.csv")
 country1 <- "DEU"
 country2 <- "GTM"
-
-
-
 ## 1. $t$-test
 Inspect the country means on overall satisfaction `Q49` using `tapply`. Please see my video on [tapply](https://www.youtube.com/watch?v=XQeag4dki8A).
-
 Test whether overall satisfaction `Q49` is equal or more than 7 using `t.test`. This is the null hypothesis. See the help function to understand how to use this function for a one-sided t-test. 
-
 Print the $t$-value and $p$-value for country 1, and on a consecutive line for country 2. Please see my video on [one-sample t-test](https://youtu.be/EztiOglzs4s). Do this for each country separately using indexing.
-
 In the excel sheet report the $t$-value and $p$-value for country 2, and determine whether this is significant or not.
-
 ```{r}
 question1 <- function() {
   
@@ -93,18 +85,14 @@ Inspect the correlation matrix, and answer the question in the excel on whether 
 
 ```{r}
 question3 <- function() {
-
   # inspect correlation matrix using cor()
   # inspect pairwise deletion using use="pairwise.complete.obs"
   # do this for each country 
   
-emancipation_items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
-emancipation_items <- emancipation_items
-
-
-cor(df[df$Country == country1,emancipation_items], use = "pairwise.complete.obs")
-
-cor(df[df$Country == country2,emancipation_items], use = "pairwise.complete.obs")
+items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
+items <- items
+cor(df[df$Country == country1,items], use = "pairwise.complete.obs")
+cor(df[df$Country == country2,items], use = "pairwise.complete.obs")
   
   # ANSWER: print() correlation matrix in country 1
   # ANSWER: print() correlation matrix in country 2
@@ -113,7 +101,6 @@ question3()
 ```
 
 Inspect which variable relates the weakest to the others. Report whether `Q28` relates weaker to the other items in country 1 or country 2. Can you think of an explanation? It measures *Pre-school child suffers with working mother* where 1 means strongly agree. Given that you've used pairwise deletion, does each correlation depend on the same observations?
-
 
 ## 4. Reliability
 
@@ -136,7 +123,6 @@ question4a <- function() {
   
   Q28R <- abs((df$Q28)-5) 
   df$Q28R <- Q28R
-
   Q29R <- abs((df$Q29)-5) 
   df$Q29R <- Q29R
   
@@ -155,11 +141,12 @@ question4a <- function() {
   Q35R <- abs((df$Q35)-6) 
   df$Q35R <- Q35R
   
-emancipation_items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
-emancipation_items_R <- c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")
+items <- c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")
+itemsR <- c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")
   
     # with the name of the old variable + R
   # ANSWER: print the crosstabulation of Q28 and Q28R
+print(table(df$Q28R, df$Q28))
 }
 question4a()
 ```
@@ -177,6 +164,7 @@ Fill out the code you used for calculating the variance-covariance matrix. Make 
 question4b <- function() {
   # first calculate number of items
   # and save this in an object.
+  summary(itemsR)
   k <- 7
   # then calculate the variance for all items per item using var()
     # use the recoded items!!
@@ -184,7 +172,7 @@ question4b <- function() {
     # use diag() to get to the variances
     # sum the variances using sum()
   # ANSWER: Print the variance-covariance matrix country 1
-  m_country1 <- var(df[df$Country== country1, itemsR], use = "pairwise.complete.obs") 
+  m_country1 <- var(df[df$Country== country1,itemsR], use = "pairwise.complete.obs") 
   
   sum(diag(m_country1))
   
@@ -199,10 +187,8 @@ question4b <- function() {
   # hover your mouse to see the nice representation
   # ANSWER: Print the cronbach's alpha for country 1
   print(((k/(k-1))*(1-sum(diag(m_country1))/sum(m_country1))))
-
   # ANSWER: Print the cronbach's alpha for country 2
   print(((k/(k-1))*(1-sum(diag(m_country2))/sum(m_country2))))
-
 }
 question4b()
 ```
@@ -223,20 +209,16 @@ corP<<- cor(df[df$Country == country2, c("Q28R", "Q29R", "Q30R","Q31R","Q32R","Q
   # calculate the average correlation using the correlation matrix
     # find the lower triangle of the matrix by lower.tri using indexing
     # Do not include the diagonal! diag=FALSE
-
 meancorC <<- mean(corC[lower.tri(corP,diag = F)])
 print((7*meancorC) / (1+(7-1) * meancorC))
-
 meancorP<<- mean(corP[lower.tri(corC,diag = F)])
 print((7*meancorP) / (1+(7-1) * meancorP))
-
     # then calculate the mean across these numbers
   # use the average correlation to fill out the formula above
   # ANSWER: print cronbach alpha for country 1
   # ANSWER: print cronbach alpha for country 2
 }
 question4c()
-
 ```
 
 You can check whether you did it correctly, using the `psych` package. Install the package first by `install.packages("psych")` (comment or delete this line before knitting). I also had to download [Rtools](https://cran.rstudio.com/bin/windows/Rtools/). Select the .exe file suitable for your operating system. Make sure you do this separately for each country!
@@ -273,10 +255,10 @@ question5 <- function() {
   # across the seven recoded emancipation items
   # save this as a new variable in your dataset
   
-emanci_DEU <- apply(df[df$Country== country1, c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
+emanci <- apply(c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
+
 
 emanci_GTM <- apply(df[df$Country== country2, c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
-
  
   # after the emancipation variable is created:
     # to save this variable in your environment 
@@ -293,7 +275,6 @@ emanci_GTM <- apply(df[df$Country== country2, c("Q28R", "Q29R", "Q30R", "Q31R", 
   mean(emanci_DEU-emanci_GTM)
 }
 question5()
-
 ```
 
 ## 6. Scatter plot
@@ -307,28 +288,20 @@ question6a <- function() {
 question6a()
   attach(df)
   
-   emancipation_1 <- apply(df[df$Country==country1, c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")], 1, mean, na.rm =TRUE)
-
-print(plot(Q262[Country==country1], emancipation_1, main = "Relationship of age and emancipation Germany", xlab = "Age Germany", ylab="Emancipation Germany"))
-
-
+   emanci_1 <- apply(df[df$Country==country1, c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")], 1, mean, na.rm =TRUE)
+print(plot(Q262[Country==country1], emanci_1, main = "Relationship of age and emancipation Germany", xlab = "Age Germany", ylab="Emancipation Germany"))
   
   
 }
 question6a()
-
 question6b <- function() {
   
   # ANSWER: print plot for country 2
   
-  emancipation_2 <- apply(df[df$Country==country2, c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")], 1, mean, na.rm =TRUE)
-
-print(plot(Q262[Country==country2], emancipation_2, main = "Relationship of age and emancipation Guatamala", xlab = "Age Guatamala", ylab="Emancipation Guatamala"))
-
-
+  emanci_2 <- apply(df[df$Country==country2, c("Q28", "Q29", "Q30", "Q31", "Q32", "Q33", "Q35")], 1, mean, na.rm =TRUE)
+print(plot(Q262[Country==country2], emanci_2, main = "Relationship of age and emancipation Guatamala", xlab = "Age Guatamala", ylab="Emancipation Guatamala"))
 }
 question6b()
-
 ```
 
 ## 7. Emancipation levels among Millennials
@@ -356,8 +329,9 @@ question7 <- function() {
   
     ages <- df$Q262
   "0" <- ages[which(df$Q262 >=35)] 
-  "1" <- ages[which(df$Q262 >=15) & (df$Q262 <= 34)]
+  "millennial" <- ages[which(df$Q262 >=15) & (df$Q262 <= 34)]
   
+  summary(ages)
   
   # ANSWER: print proportions millennials in country 1
   
@@ -366,10 +340,11 @@ question7 <- function() {
   print(t.test(df$Q262, conf.level=0.95))
   
   # ANSWER: print t-test to test the means of emanci for millennials
-  
-
+  knitr::opts_chunk$set(error = TRUE)
+  knitr::purl("./BRM1-week2.Rmd")
 }
 question7()
+
 
 ```
 
