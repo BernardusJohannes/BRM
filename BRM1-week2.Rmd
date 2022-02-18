@@ -163,33 +163,53 @@ Fill out the code you used for calculating the variance-covariance matrix. Make 
 
 ```{r}
 question4b <- function() {
+    
   # first calculate number of items
   # and save this in an object.
-  summary(itemsR)
-  k <- 7
+
   # then calculate the variance for all items per item using var()
     # use the recoded items!!
     # to make it easier, we use listwise deletion (use="complete.obs")
     # use diag() to get to the variances
     # sum the variances using sum()
   # ANSWER: Print the variance-covariance matrix country 1
-  m_country1 <- var(df[df$Country== country1,itemsR], use = "pairwise.complete.obs") 
-  
-  sum(diag(m_country1))
-  
   # ANSWER: Print the variance-covariance matrix country 2
-  m_country2 <- var(df[df$Country== country2, itemsR], use = "pairwise.complete.obs") 
-  
- sum(diag(m_country2))
-  
+yy <- var( df [ df$Country==country1 , items] , use = "pairwise.complete.obs")
+yy
+
+yDEU <- var( df [ df$Country==country1 , items] , use = "complete.obs")
+yDEU
+
+yGTM <- var( df [ df$Country==country2 , items] , use = "complete.obs")
+yGTM
+
+diag(yy)
+sum(diag(yy))
+
   # lastly, calculate the variance of total test score
   # which is the sum of all covariances and variances
+sum(yy)
+
   # fill in these numbers in the formula that is written above 
-  # hover your mouse to see the nice representation
-  # ANSWER: Print the cronbach's alpha for country 1
-  print(((k/(k-1))*(1-sum(diag(m_country1))/sum(m_country1))))
-  # ANSWER: Print the cronbach's alpha for country 2
-  print(((k/(k-1))*(1-sum(diag(m_country2))/sum(m_country2))))
+
+sum(diag(yy))/sum(yy)
+
+k <- 7
+k
+
+Alpha <- (k / ( k - 1 ) ) * ( 1 - ( sum ( diag( vv ) ) / sum( vv ) ) )
+Alpha
+
+AlphaDEU <- (k / ( k - 1 ) ) * ( 1 - ( sum ( diag ( vCYP ) ) / sum ( vCYP ) ) )
+AlphaDEU
+
+AlphaGTM <- (k / ( k - 1 ) ) * ( 1 - (sum ( diag ( vKGZ ) ) / sum( vKGZ ) ) )
+
+AlphaGTM  
+
+# hover your mouse to see the nice representation
+  # ANSWER: Print the cronbach's alpha you've estimated for country 1
+  # ANSWER: Print the cronbach's alpha you've estimated for country 2
 }
 question4b()
 ```
