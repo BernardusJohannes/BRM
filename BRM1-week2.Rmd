@@ -256,10 +256,7 @@ question5 <- function() {
   # across the seven recoded emancipation items
   # save this as a new variable in your dataset
   
-emanci <- apply(c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
-
-
-emanci_GTM <- apply(df[df$Country== country2, c("Q28R", "Q29R", "Q30R", "Q31R", "Q32R", "Q33R", "Q35R")], 2, mean, na.rm =TRUE)
+emanci <<- apply(df[, items_R], 1, mean, na.rm =TRUE)
  
   # after the emancipation variable is created:
     # to save this variable in your environment 
